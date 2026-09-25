@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { FormEvent, useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
 import { apiFetch } from "@/lib/api";
 
 type Note = {
@@ -12,6 +13,7 @@ type Note = {
 };
 
 export default function DashboardPage() {
+  const router = useRouter();
   const [notes, setNotes] = useState<Note[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
@@ -91,20 +93,23 @@ export default function DashboardPage() {
         const response = await apiFetch("/api/auth/me", {
           method: "GET",
         });
+
         const data = await response.json();
 
         if (!response.ok) {
+          router.replace("/login");
           return;
         }
 
         setCurrentUser(data.user);
       } catch (error) {
         console.error("Fetch current user error:", error);
+        router.replace("/login");
       }
     };
 
     fetchCurrentUser();
-  }, []);
+  }, [router]);
   const handleCreateNote = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
