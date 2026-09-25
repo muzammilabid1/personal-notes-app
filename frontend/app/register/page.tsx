@@ -43,11 +43,7 @@ export default function RegisterPage() {
         return;
       }
 
-      setMessage("Account created successfully");
-
-      setTimeout(() => {
-        router.push("/dashboard");
-      }, 500);
+      router.replace("/dashboard");
     } catch (error) {
       setMessage("Something went wrong");
     } finally {

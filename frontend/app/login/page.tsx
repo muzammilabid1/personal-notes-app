@@ -39,7 +39,7 @@ export default function LoginPage() {
       }
 
       setMessage("Login successful");
-      router.push("/dashboard");
+      router.replace("/dashboard");
     } catch (error) {
       setMessage("Something went wrong");
     } finally {
